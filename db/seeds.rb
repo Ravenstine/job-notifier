@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Board.create name: "Stack Overflow Careers"
+Board.create name: "GitHub Jobs"
+Board.create name: "Authentic Jobs"
