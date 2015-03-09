@@ -2,6 +2,7 @@ class Agent < ActiveRecord::Base
   has_many :agents_listings
   has_many :listings, through: :agents_listings
   belongs_to :location
+  belongs_to :user
   def find_new_listings scraper_class
     scraper = scraper_class.new self
     scraper.download

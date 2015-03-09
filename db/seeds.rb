@@ -9,7 +9,12 @@
 Board.create name: "Stack Overflow Careers"
 Board.create name: "GitHub Jobs"
 Board.create name: "Authentic Jobs"
+Board.create name: "Craigslist"
 
-Location.create city: "Los Angeles", county: "Los Angeles", state: "CA", zip_code: "90001"
-Location.create city: "San Francisco", county: "San Francisco", state: "CA", zip_code: "94101"
-Location.create city: "Santa Barbara", county: "Santa Barbara", state: "CA", zip_code: "93101"
+
+Location.create city: "Los Angeles", county: "Los Angeles", state: "CA", country: "US", zip_code: "90001", craigslist_prefix: "losangeles"
+Location.create city: "San Francisco", county: "San Francisco", state: "CA", country: "US", zip_code: "94101", craigslist_prefix: "sfbay"
+Location.create city: "Santa Barbara", county: "Santa Barbara", state: "CA", country: "US", zip_code: "93101", craigslist_prefix: "santabarbara"
+
+Agent.create terms: "ruby", location_id: 1
+Agent.create terms: "ruby", location_id: 2

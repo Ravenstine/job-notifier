@@ -2,6 +2,7 @@ class GithubScraper < RssScraper
   def initialize agent
     super
     @uri = URI.parse "https://jobs.github.com/positions.atom?description=#{url_safe_string(@terms)}&location=#{url_safe_string(@location.city_and_state)}"
+    @board_id = 2
   end
   def write
     items   = @response["feed"]["entry"]
@@ -13,7 +14,7 @@ class GithubScraper < RssScraper
         posted_at: item["updated"],
         full_time: !item["content"].match(/full[- ]*time/i).nil?,
         part_time: !item["content"].match(/part[- ]*time/i).nil?,
-        board_id: 2,
+        board_id: @board_id,
         remote_id: item["id"]
       }
     }

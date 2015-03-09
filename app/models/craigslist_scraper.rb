@@ -1,21 +1,21 @@
-class AuthenticJobsScraper < RssScraper
+class CraigslistScraper < RssScraper
   def initialize agent
     super
-    @uri = URI.parse("http://www.authenticjobs.com/rss/custom.php?terms=#{url_safe_string(@terms)}&type=1,3,5,2,6,4&location=#{url_safe_string(@location.city_and_state)}")
-    @board_id = 3
+    @uri = URI.parse("http://#{@location.craigslist_prefix}.craigslist.org/search/jjj?query=#{url_safe_string(@terms)}&sort=date&format=rss")
+    @board_id = 4
   end
   def write
-    items   = @response["rss"]["channel"]["item"]
+    items   = @response["rdf:RDF"]["item"] rescue []
     attribs = lambda { |item|
       {
         title: item["title"],
         description: item["description"],
         url: item["link"],
-        posted_at: item["pubDate"],
+        posted_at: item["dc:date"],
         full_time: !item["description"].match(/<p>Full-time<\/p>/).nil?,
         part_time: !item["description"].match(/<p>Part-time<\/p>/).nil?,
         board_id: @board_id,
-        remote_id: item["guid"]   
+        remote_id: item["link"]   
       }
     }
     write_listing items, attribs, @agent

@@ -2,6 +2,7 @@ class StackOverflowScraper < RssScraper
   def initialize agent
     super
     @uri = URI.parse "http://careers.stackoverflow.com/jobs/feed?searchTerm=#{url_safe_string(@terms)}&location=#{url_safe_string(@location.city_and_state)}&range=20&distanceUnits=Miles"
+    @board_id = 1
   end
   def write
     items   = @response["rss"]["channel"]["item"]
@@ -13,7 +14,7 @@ class StackOverflowScraper < RssScraper
         posted_at: item["pubDate"],
         full_time: !item["description"].match(/full[- ]*time/i).nil?,
         part_time: !item["description"].match(/part[- ]*time/i).nil?,
-        board_id: 1,
+        board_id: @board_id,
         remote_id: item["guid"]   
       }
     }

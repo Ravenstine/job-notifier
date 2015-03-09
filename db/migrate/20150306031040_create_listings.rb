@@ -9,6 +9,7 @@ class CreateListings < ActiveRecord::Migration
       t.string :url
       t.string :tags
       t.string :location
+      t.string :contact_email
       t.boolean :remote, default: false
       t.boolean :offers_relocation, default: false
       t.boolean :full_time, default: false

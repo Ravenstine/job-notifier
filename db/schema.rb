@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308222732) do
+ActiveRecord::Schema.define(version: 20150309003317) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "terms",            limit: 255
@@ -30,10 +30,11 @@ ActiveRecord::Schema.define(version: 20150308222732) do
   add_index "agents", ["user_id"], name: "index_agents_on_user_id", using: :btree
 
   create_table "agents_listings", force: :cascade do |t|
-    t.integer  "agent_id",   limit: 4
-    t.integer  "listing_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "agent_id",    limit: 4
+    t.integer  "listing_id",  limit: 4
+    t.boolean  "resume_sent", limit: 1, default: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "boards", force: :cascade do |t|
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 20150308222732) do
     t.string   "url",               limit: 255
     t.string   "tags",              limit: 255
     t.string   "location",          limit: 255
+    t.string   "contact_email",     limit: 255
     t.boolean  "remote",            limit: 1,     default: false
     t.boolean  "offers_relocation", limit: 1,     default: false
     t.boolean  "full_time",         limit: 1,     default: false
@@ -72,13 +74,14 @@ ActiveRecord::Schema.define(version: 20150308222732) do
   add_index "listings", ["remote_id"], name: "index_listings_on_remote_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.string   "city",       limit: 255
-    t.string   "county",     limit: 255
-    t.string   "state",      limit: 255
-    t.string   "country",    limit: 255
-    t.string   "zip_code",   limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "city",              limit: 255
+    t.string   "county",            limit: 255
+    t.string   "state",             limit: 255
+    t.string   "country",           limit: 255
+    t.string   "zip_code",          limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "craigslist_prefix", limit: 255
   end
 
   create_table "users", force: :cascade do |t|

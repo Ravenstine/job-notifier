@@ -5,6 +5,7 @@ namespace :listings do
       agent.find_new_listings AuthenticJobsScraper
       agent.find_new_listings GithubScraper
       agent.find_new_listings StackOverflowScraper
+      agent.find_new_listings CraigslistScraper
     end
   end
 end
