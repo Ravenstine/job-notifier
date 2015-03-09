@@ -21,5 +21,6 @@ class CreateListings < ActiveRecord::Migration
       t.datetime :posted_at
       t.timestamps null: false
     end
+    add_index :listings, :remote_id
   end
 end

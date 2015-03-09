@@ -36,6 +36,9 @@ gem 'puma'
 gem 'condition_red'
 gem 'nokogiri'
 gem 'nori'
+gem 'whenever', require: false
+gem 'devise'
+gem 'slim-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

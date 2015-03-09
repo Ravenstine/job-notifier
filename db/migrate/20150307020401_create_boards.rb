@@ -4,5 +4,6 @@ class CreateBoards < ActiveRecord::Migration
       t.string :name
       t.timestamps null: false
     end
+    add_index :boards, :name
   end
 end

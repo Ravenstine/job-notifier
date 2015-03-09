@@ -11,14 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307203314) do
+ActiveRecord::Schema.define(version: 20150308222732) do
 
   create_table "agents", force: :cascade do |t|
-    t.string   "terms",      limit: 255
-    t.string   "location",   limit: 255
-    t.integer  "user_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "terms",            limit: 255
+    t.integer  "location_id",      limit: 4
+    t.integer  "user_id",          limit: 4
+    t.boolean  "auto_send_resume", limit: 1,   default: true
+    t.boolean  "active",           limit: 1,   default: true
+    t.boolean  "email_updates",    limit: 1,   default: true
+    t.string   "whitelist",        limit: 255
+    t.string   "blacklist",        limit: 255
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "agents", ["active"], name: "index_agents_on_active", using: :btree
+  add_index "agents", ["user_id"], name: "index_agents_on_user_id", using: :btree
+
+  create_table "agents_listings", force: :cascade do |t|
+    t.integer  "agent_id",   limit: 4
+    t.integer  "listing_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "boards", force: :cascade do |t|
@@ -26,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150307203314) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "boards", ["name"], name: "index_boards_on_name", using: :btree
 
   create_table "listings", force: :cascade do |t|
     t.integer  "board_id",          limit: 4
@@ -52,5 +69,34 @@ ActiveRecord::Schema.define(version: 20150307203314) do
   end
 
   add_index "listings", ["agent_id"], name: "index_listings_on_agent_id", using: :btree
+  add_index "listings", ["remote_id"], name: "index_listings_on_remote_id", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "city",       limit: 255
+    t.string   "county",     limit: 255
+    t.string   "state",      limit: 255
+    t.string   "country",    limit: 255
+    t.string   "zip_code",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
