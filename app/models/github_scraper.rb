@@ -12,8 +12,8 @@ class GithubScraper < RssScraper
         description: item["content"],
         url: item["link"],
         posted_at: item["updated"],
-        full_time: !item["content"].match(/full[- ]*time/i).nil?,
-        part_time: !item["content"].match(/part[- ]*time/i).nil?,
+        full_time: !item["content"].match(Regex::Fulltime).nil?,
+        part_time: !item["content"].match(Regex::Parttime).nil?,
         board_id: @board_id,
         remote_id: item["id"]
       }

@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-body
+    .col-md-12
+      h3 = listing.title
+      div
+        span.badge = listing.posted_at
+      p = raw listing.description.truncate(250)
+      div
+        / span.badge = listing.posted_at
+        .pull-right
+          / span.label.label-default alice
+          / span.label.label-primary story
+          / span.label.label-success blog
+          / span.label.label-info personal
+          / span.label.label-warning Warning
+          / span.label.label-danger Danger
+      hr/

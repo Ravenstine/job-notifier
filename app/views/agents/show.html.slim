@@ -1,0 +1,4 @@
+h2 Agent #{@agent.name}
+
+- Listing.all.limit(10).each do |listing|
+  = render partial: "listings/result", locals: {listing: listing}

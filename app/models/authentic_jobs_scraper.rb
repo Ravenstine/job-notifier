@@ -12,8 +12,8 @@ class AuthenticJobsScraper < RssScraper
         description: item["description"],
         url: item["link"],
         posted_at: item["pubDate"],
-        full_time: !item["description"].match(/<p>Full-time<\/p>/).nil?,
-        part_time: !item["description"].match(/<p>Part-time<\/p>/).nil?,
+        full_time: !item["description"].match(Regex::Fulltime).nil?,
+        part_time: !item["description"].match(Regex::Parttime).nil?,
         board_id: @board_id,
         remote_id: item["guid"]   
       }

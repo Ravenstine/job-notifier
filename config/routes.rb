@@ -1,5 +1,20 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
+  root 'dashboard#index', as: :dashboard
+  match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
+
+
+  ## Agents
+  get '/agents' => 'agents#index', as: :agents
+  get '/agents/new' => 'agents#new', as: :new_agent
+  get '/agents/:id' => 'agents#show', as: :agent
+  get '/agents/:id/edit' => 'agents#edit', as: :edit_agent
+  post '/agents' => 'agents#create'
+  patch '/agents/:id' => 'agents#update'
+  delete '/agents/:id' => 'agents#destroy'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
