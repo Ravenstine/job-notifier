@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-body
     .col-md-12
-      h3 = listing.title
+      h3 = link_to listing.title, listing_path(listing)
       div
         span.badge = listing.posted_at
       p = raw listing.description.truncate(250)

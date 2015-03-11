@@ -1,10 +1,10 @@
 .panel.panel-default
   .panel-body
     .col-md-12
-      h3 = listing.title
+      h3 = @listing.title
       div
-        span.badge = listing.posted_at
-      p = raw listing.description
+        span.badge = @listing.posted_at
+      p = raw @listing.description
       div
         / span.badge = listing.posted_at
         .pull-right

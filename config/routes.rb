@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   delete '/agents/:id' => 'agents#destroy'
 
 
+  ## Listings
+  get '/listings/:id' => 'listings#show', as: :listing
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
