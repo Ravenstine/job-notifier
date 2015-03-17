@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
 
   ## Listings
+  get '/listings/search' => 'search#listings_search', as: :listings_search
   get '/listings/:id' => 'listings#show', as: :listing
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

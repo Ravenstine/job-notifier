@@ -5,16 +5,19 @@ class AgentsListing < ActiveRecord::Base
   def valid? context=nil
     super && passes_whitelist? && passes_blacklist?
   end
+  # def mark_read
+  #   update read: true
+  # end
   private
   def passes_whitelist?
     values = agent.whitelist.split(",").map(&:strip)
-    values.all?{|value| listing.description.downcase.include?(value.downcase)}
+    values.all?{|value| listing.description.downcase.include?(value.downcase) && listing.title.downcase.include?(value.downcase)}
   rescue
     true
   end
   def passes_blacklist?
     values = agent.blacklist.split(",").map(&:strip)
-    !values.any?{|value| listing.description.downcase.include?(value.downcase)}
+    !values.any?{|value| listing.description.downcase.include?(value.downcase) || listing.title.downcase.include?(value.downcase)}
   rescue
     true
   end

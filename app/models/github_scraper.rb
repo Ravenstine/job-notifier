@@ -10,7 +10,7 @@ class GithubScraper < RssScraper
       {
         title: item["title"],
         description: item["content"],
-        url: item["link"],
+        url: item["link"]["@href"],
         posted_at: item["updated"],
         full_time: !item["content"].match(Regex::Fulltime).nil?,
         part_time: !item["content"].match(Regex::Parttime).nil?,

@@ -3,15 +3,22 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
-  has_many :agents
-  has_many :listings, through: :agents
+  has_many :agents, dependent: :destroy
+  has_many :listings, through: :agents, dependent: :destroy
+  has_one :identity, through: :destroy
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.find_for_oauth(auth, signed_in_resource = nil)
+
+    binding.pry
 
     # Get the identity and user if they exist
     identity = Identity.find_for_oauth(auth)
@@ -35,9 +42,13 @@ class User < ActiveRecord::Base
  # Create the user if it's a new registration
       if user.nil?
         user = User.new(
-          name: auth.extra.raw_info.name,
+          first_name: auth.info.first_name,
+          last_name: auth.info.last_name,
           #username: auth.info.nickname || auth.uid,
-          email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+          # email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+          email: auth.info.email,
+          image: auth.info.image,
+          linked_in: auth.info.urls.public_profile,
           password: Devise.friendly_token[0,20]
         )
         # user.skip_confirmation!

@@ -1,7 +1,8 @@
-.panel.panel-default
+.panel.panel-default.listings-result class=listing.read_class
   .panel-body
     .col-md-12
       h3 = link_to listing.title, listing_path(listing)
+      h4 = link_to listing.board_name, listing.url, target: "_blank"
       div
         span.badge = listing.posted_at
       p = raw listing.description.truncate(250)

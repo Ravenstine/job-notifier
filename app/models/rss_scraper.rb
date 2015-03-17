@@ -14,7 +14,7 @@ class RssScraper
   def initialize agent
     @response = nil
     @terms = agent.terms
-    @location = agent.location
+    @location = agent.location || OpenStruct.new({})
     @agent = agent
     @agent.if true: ->{ @agent_id = @agent.id }
   end
@@ -32,6 +32,7 @@ private
     puts "Writing listings..."
     date_threshold = ActiveRecord::Base.connection.execute("SELECT MAX(posted_at) FROM listings WHERE board_id = #{@board_id}").first
     date_threshold.if true: ->{ date_threshold = date_threshold.first }
+    date_threshold = date_threshold || 100.years.ago
     items.if true: -> { 
       items.each do |item|
         puts "Writing a listing..."
@@ -39,6 +40,7 @@ private
         (date_threshold < props[:posted_at]).if true: ->{
           ActiveRecord::Base.transaction do
             listing = Listing.create props
+            extract_email_from_description listing
             callback.call(listing)
             agent.agents_listings.create listing_id: listing.id, agent_id: agent.id
           end

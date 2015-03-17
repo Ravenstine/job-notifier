@@ -4,8 +4,12 @@ class AuthenticJobsScraper < RssScraper
     @uri = URI.parse("http://www.authenticjobs.com/rss/custom.php?terms=#{url_safe_string(@terms)}&type=1,3,5,2,6,4&location=#{url_safe_string(@location.city_and_state)}")
     @board_id = 3
   end
+  def download
+    @response = Nokogiri::XML(Net::HTTP.get(@uri)).css("item").to_a.map{|i| Nori.new.parse(i.to_xml)["item"]}.reject{|i| i.nil?}
+  end
   def write
-    items   = @response["rss"]["channel"]["item"]
+    # items   = @response["rss"]["channel"]["item"]
+    items = @response
     attribs = lambda { |item|
       {
         title: item["title"],

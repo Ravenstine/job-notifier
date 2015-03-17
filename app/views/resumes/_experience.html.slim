@@ -1,0 +1,6 @@
+h4 Experience
+- experiences.each do |experience|
+  = experience["company"]["name"]
+  = experience["startDate"]
+  = experience["endDate"]
+  span.description = experience["summary"]

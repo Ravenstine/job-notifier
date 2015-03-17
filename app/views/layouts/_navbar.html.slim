@@ -15,16 +15,18 @@ nav.navbar.navbar-default
             span.sr-only (current)
         li
           a href="#"  Link
-      form.navbar-form.navbar-left role="search" 
+      = form_tag listings_search_path, action: "listings/search", method: :get, class: "navbar-form navbar-left" do
         .form-group
-          input.form-control placeholder="Search" type="text" /
-        button.btn.btn-default type="submit"  Submit
+          = text_field_tag :query, nil, placeholder: "Search Jobs", class: "form-control"
+          = submit_tag "Search", class: "btn btn-default"
+          / input.form-control placeholder="Search" type="text" /
+        / button.btn.btn-default type="submit"  Submit
       ul.nav.navbar-nav.navbar-right
         li
           = link_to "Sign out", destroy_user_session_path, method: :delete
         li.dropdown
           a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button" 
-            | Dropdown
+            = @user.full_name
             span.caret
           ul.dropdown-menu role="menu" 
             li

@@ -10,6 +10,7 @@ class AgentsController < UserApplicationController
   end
   def show
     @agent = @user.agents.find(params[:id])
+    @listings = @agent.listings.select(Listing.default_select)
   end
   def edit
     @agent = @user.agents.find(params[:id])
