@@ -1,0 +1,12 @@
+= form_for agent do |f|
+  label Terms
+  = f.text_field :terms
+  label Location
+  = f.collection_select :location_id, Location.all , :id, :city, include_blank: false
+  label Whitelist
+  = f.text_field :whitelist
+  label Blacklist
+  = f.text_field :blacklist
+  label Email Updates
+  = f.check_box :email_updates
+  = f.submit

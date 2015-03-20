@@ -1,0 +1,35 @@
+h1 Listing appointments
+= link_to 'New Appointment', new_appointment_path, class: "btn btn-success"
+
+table.table.table-striped
+  thead
+    tr
+      / th Name
+      / th Person
+      / th Company
+      / th Description
+      / th Time
+      / th User
+      th
+      th
+      th
+      th
+
+  tbody
+    - @appointments.each do |appointment|
+      tr
+        td 
+          = link_to appointment_path(appointment) do 
+            = appointment.in_words
+          = time_ago_in_words appointment.time
+        / td = appointment.name
+        / td = appointment.person
+        / td = appointment.company
+        / td = appointment.description
+        / td = appointment.time
+        / td = appointment.user
+        td = link_to 'Edit', edit_appointment_path(appointment), class: "btn btn-warning btn-xs"
+        td = link_to 'Delete', appointment, data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-danger btn-xs"
+
+br
+

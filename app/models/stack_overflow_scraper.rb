@@ -12,13 +12,13 @@ class StackOverflowScraper < RssScraper
         description: item["description"],
         url: item["link"],
         posted_at: item["pubDate"],
-        full_time: !item["description"].match(/full[- ]*time/i).nil?,
-        part_time: !item["description"].match(/part[- ]*time/i).nil?,
+        full_time: !item["description"].match(Regex::Fulltime).nil?,
+        part_time: !item["description"].match(Regex::Parttime).nil?,
         board_id: @board_id,
-        remote_id: item["guid"]   
+        remote_id: item["guid"]
       }
     }
-    write_listing items, attribs, @agent
+    write_listings items, attribs, @agent
   rescue
   end
 end

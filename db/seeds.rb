@@ -15,6 +15,5 @@ Board.create name: "Craigslist"
 Location.create city: "Los Angeles", county: "Los Angeles", state: "CA", country: "US", zip_code: "90001", craigslist_prefix: "losangeles"
 Location.create city: "San Francisco", county: "San Francisco", state: "CA", country: "US", zip_code: "94101", craigslist_prefix: "sfbay"
 Location.create city: "Santa Barbara", county: "Santa Barbara", state: "CA", country: "US", zip_code: "93101", craigslist_prefix: "santabarbara"
-
-Agent.create terms: "ruby", location_id: 1
-Agent.create terms: "ruby", location_id: 2
+Location.create city: "Austin", county: "Austin", state: "TX", country: "US", zip_code: "73301", craigslist_prefix: "austin"
+Location.create city: "Orange County", county: "Orange", state: "CA", country: "US", zip_code: "92868", craigslist_prefix: "orangecounty"

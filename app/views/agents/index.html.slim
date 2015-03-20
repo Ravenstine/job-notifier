@@ -1,0 +1,27 @@
+h2 Agents
+
+= link_to "New Agent", new_agent_path, class: "btn btn-success"
+
+table.table.table-striped
+  thead
+    th Name
+    th Terms
+    th Location
+    th Jobs Found
+    th Whitelist
+    th Blacklist
+    th Active?
+    th
+  tbody
+    - @agents.each do |agent|
+      tr
+        td = link_to "Agent #{agent.name}", agent_path(agent)
+        td = agent.terms.truncate(10)
+        td = agent.location_name
+        td = agent.jobs_found
+        td = agent.whitelist.truncate(10)
+        td = agent.blacklist.truncate(10)
+        td = agent.active
+        td
+          = link_to "Edit", edit_agent_path(agent), class: "btn btn-warning btn-xs"
+          = link_to "Delete", agent_path(agent), class: "btn btn-danger btn-xs", method: :delete

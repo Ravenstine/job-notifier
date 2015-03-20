@@ -1,0 +1,18 @@
+.panel.panel-default.listings-result class=listing.read_class
+  .panel-body
+    .col-md-12
+      h3 = link_to listing.title, listing_path(listing)
+      h4 = link_to listing.board_name, listing.url, target: "_blank"
+      div
+        span.badge  #{time_ago_in_words(listing.posted_at)} ago
+      p = raw listing.description.truncate(250)
+      div
+        / span.badge = listing.posted_at
+        .pull-right
+          / span.label.label-default alice
+          / span.label.label-primary story
+          / span.label.label-success blog
+          / span.label.label-info personal
+          / span.label.label-warning Warning
+          / span.label.label-danger Danger
+      hr/

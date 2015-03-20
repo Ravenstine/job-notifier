@@ -1,0 +1,6 @@
+h2 Latest Jobs Found by Your Agents
+
+- @listings.each do |listing|
+  = render partial: "listings/result", locals: {listing: listing}
+
+= will_paginate @listings

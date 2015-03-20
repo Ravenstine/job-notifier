@@ -39,7 +39,10 @@ gem 'nori'
 gem 'whenever', require: false
 gem 'devise'
 gem 'slim-rails'
-gem 'libcraigscrape'
+gem 'omniauth'
+gem 'omniauth-linkedin'
+gem 'will_paginate'
+gem 'socksify'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
