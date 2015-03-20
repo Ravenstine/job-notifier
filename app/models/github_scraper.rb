@@ -18,7 +18,7 @@ class GithubScraper < RssScraper
         remote_id: item["id"]
       }
     }
-    write_listing items, attribs, @agent
+    write_listings items, attribs, @agent
   rescue
   end
 end

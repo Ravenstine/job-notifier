@@ -14,10 +14,10 @@ nav.navbar.navbar-default
             | Agents
             span.sr-only (current)
         li
-          a href="#"  Link
+          = link_to "Appointments", appointments_path
       = form_tag listings_search_path, action: "listings/search", method: :get, class: "navbar-form navbar-left" do
         .form-group
-          = text_field_tag :query, nil, placeholder: "Search Jobs", class: "form-control"
+          = text_field_tag :query, listing_search, placeholder: "Search Jobs", class: "form-control"
           = submit_tag "Search", class: "btn btn-default"
           / input.form-control placeholder="Search" type="text" /
         / button.btn.btn-default type="submit"  Submit

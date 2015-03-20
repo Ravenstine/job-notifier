@@ -4,7 +4,7 @@
       h3 = link_to listing.title, listing_path(listing)
       h4 = link_to listing.board_name, listing.url, target: "_blank"
       div
-        span.badge = listing.posted_at
+        span.badge  #{time_ago_in_words(listing.posted_at)} ago
       p = raw listing.description.truncate(250)
       div
         / span.badge = listing.posted_at

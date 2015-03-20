@@ -4,8 +4,16 @@ class CraigslistScraper < RssScraper
     @uri = URI.parse("http://#{@location.craigslist_prefix}.craigslist.org/search/jjj?query=#{url_safe_string(@terms)}&sort=date&format=rss")
     @board_id = 4
   end
-  def download
-    @response = Nokogiri::XML(Net::HTTP.get(@uri)).css("item").to_a.map{|i| Nori.new.parse(i.to_xml)["item"]}.reject{|i| i.nil?}
+  def download    
+    request = Net::HTTP::Get.new(@uri)
+    request.add_field 'User-Agent', "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
+    response = Net::HTTP.start(@uri.host, @uri.port){|http| http.request(request)}.body
+    @response = Nokogiri::XML(response).css("item").to_a.map{|i| Nori.new.parse(i.to_xml)["item"]}.reject{|i| i.nil?}
+    # require 'socksify/http'https://techblog.willshouse.com/2012/01/03/most-common-user-agents/
+    # Net::HTTP.SOCKSProxy('127.0.0.1', 9050).start(@uri.host, @uri.port) do |http|
+    #   result = http.get(@uri.path)
+    #   @response = Nokogiri::XML(result).css("item").to_a.map{|i| Nori.new.parse(i.to_xml)["item"]}.reject{|i| i.nil?}
+    # end
   end
   def write
     items   = @response rescue []
@@ -26,7 +34,7 @@ class CraigslistScraper < RssScraper
       extract_email_from_description(listing) || extract_anonemail(listing)
     }
 
-    write_listing items, attribs, @agent, callback 
+    write_listings items, attribs, @agent, callback 
   end
 
   private

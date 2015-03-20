@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks'}
   root 'dashboard#index', as: :dashboard
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
@@ -17,6 +18,9 @@ Rails.application.routes.draw do
   ## Listings
   get '/listings/search' => 'search#listings_search', as: :listings_search
   get '/listings/:id' => 'listings#show', as: :listing
+
+  ## Appointments
+  resources :appointments
 
 
   # The priority is based upon order of creation: first created -> highest priority.

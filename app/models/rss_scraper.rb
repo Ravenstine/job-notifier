@@ -28,29 +28,34 @@ private
   def url_safe_string string
     URI.escape string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
   end
-  def write_listing items, attribs, agent, callback=Proc.new{}
+  def write_listings items, attribs, agent, callback=Proc.new{}
     puts "Writing listings..."
-    date_threshold = ActiveRecord::Base.connection.execute("SELECT MAX(posted_at) FROM listings WHERE board_id = #{@board_id}").first
-    date_threshold.if true: ->{ date_threshold = date_threshold.first }
+    date_threshold = agent.listings.order("posted_at DESC").last
+    # date_threshold = ActiveRecord::Base.connection.execute("SELECT MAX(posted_at) FROM listings WHERE board_id = #{@board_id}").first
+    date_threshold.if true: ->{ date_threshold = date_threshold.posted_at }
     date_threshold = date_threshold || 100.years.ago
     items.if true: -> { 
       items.each do |item|
-        puts "Writing a listing..."
-        props = attribs.call(item)
-        (date_threshold < props[:posted_at]).if true: ->{
-          ActiveRecord::Base.transaction do
-            listing = Listing.create props
-            extract_email_from_description listing
-            callback.call(listing)
-            agent.agents_listings.create listing_id: listing.id, agent_id: agent.id
-          end
-        }
-        puts "Finished writing a listing."
+        write_listing item, attribs, date_threshold, callback, agent
       end
     }
     puts "Listings written."
   end
   def extract_email_from_description listing
     listing.contact_email = listing.description.match(Regex::Email).to_a.last rescue nil
+  end
+  def write_listing item, attribs, date_threshold, callback, agent
+    puts "Writing a listing..."
+    props = attribs.call(item)
+    (date_threshold < props[:posted_at]).if true: ->{
+      ActiveRecord::Base.transaction do
+        listing = Listing.where(props).first_or_create props
+        extract_email_from_description listing
+        listing.save
+        callback.call(listing)
+        agent.agents_listings.where(listing_id: listing.id, agent_id: agent.id).first_or_create
+      end
+    }
+    puts "Finished writing a listing."
   end
 end

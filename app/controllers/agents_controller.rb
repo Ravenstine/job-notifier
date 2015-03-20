@@ -6,6 +6,7 @@ class AgentsController < UserApplicationController
     @agent = Agent.new
   end
   def create
+    @agent = Agent.new agent_params
     @user.accepts_new_agents?.if true: ->{ create_new_agent }, false: ->{ cant_create }
   end
   def show
